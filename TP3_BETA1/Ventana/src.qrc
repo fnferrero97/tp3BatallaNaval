@@ -1,0 +1,16 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>bg.png</file>
+        <file>icon.png</file>
+        <file>crucero.png</file>
+        <file>destructor.png</file>
+        <file>fragata.png</file>
+        <file>lancha.png</file>
+        <file>portaavion.png</file>
+        <file>submarino.png</file>
+    </qresource>
+    <qresource prefix="/sounds">
+        <file>music01.mp3</file>
+    </qresource>
+    <qresource prefix="/saves"/>
+</RCC>
