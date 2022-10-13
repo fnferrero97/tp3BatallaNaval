@@ -6,20 +6,18 @@
 
 class Tablero {
 protected:
-  int dimension;
-  int** matriz;
+    int dimension;
+    int** matriz;
 
 public:
-  Tablero(){}
-  Tablero(int);
-  ~Tablero(){}
+    Tablero(){}
+    Tablero(int);
+    ~Tablero(){}
 
-  int** inicializarMatriz(int);
-  bool cambiarCasilla(int, int, int);
-  void dibujar();
-  bool verificarCoordenadas(int, int);
-
-  int **getMatriz() const;
+    int** inicializarMatriz(int);
+    bool cambiarCasilla(int, int, int);
+    bool verificarCoordenadas(int, int);
+    int** getMatriz() const;
 };
 
 #endif // TABLERO_H

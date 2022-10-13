@@ -1,36 +1,44 @@
 ﻿#include "barco.h"
-#include <iostream>
 
 Barco::Barco(int x, int y, int tamanio, char orientacion, char* nombre) {
-  this->x = x;
-  this->y = y;
-  this->tamanio = tamanio;
-  this->orientacion = orientacion;
-  this->nombre = nombre;
-  this->muerto = false;
-  this->golpes = 0;
-  this->cuerpo = inicializaCuerpo();
+    this->x = x;
+    this->y = y;
+    this->tamanio = tamanio;
+    this->orientacion = orientacion;
+    this->nombre = nombre;
+    this->muerto = false;
+    this->golpes = 0;
+    this->cuerpo = inicializaCuerpo();
 }
 
 Barco::~Barco() {}
 
 std::vector<Codigo> Barco::inicializaCuerpo() {
-  std::vector<Codigo> cuerpo(this->tamanio, Codigo::Sano);
-  return cuerpo;
+    std::vector<Codigo> cuerpo(this->tamanio, Codigo::Sano);
+    return cuerpo;
 }
 
 bool Barco::golpe(int x) {
-  if (x > this->tamanio || this->cuerpo[x] == Codigo::Dañado) return false;
 
-  this->cuerpo[x] = Codigo::Dañado;
-  this->golpes++;
+    if (this->codigo == Codigo::Submarino){
+        if (x == 1) {
+            for (int i = 0; i < this->tamanio; ++i) {
+                this->cuerpo[i] = Codigo::Dañado;
+                this->golpes = 3;
+                return true;
+            }
+        }
+    } else {
+        this->cuerpo[x] = Codigo::Dañado;
+        this->golpes++;
+    }
 
-  if (this->golpes == this->tamanio) {
-    this->muerto = true;
-    return true;
-  }
+    if (this->golpes == this->tamanio) {
+        this->muerto = true;
+        return true;
+    }
 
-  return false;
+    return false;
 }
 
 int Barco::getX() const {
