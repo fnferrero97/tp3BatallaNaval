@@ -1,21 +1,16 @@
 ﻿#include "tablerobarcos.h"
 
 
-TableroBarcos::TableroBarcos(int dimension, int maxBarcos) : Tablero(dimension) {
-    this->cantBarcos = 0;
+TableroBarcos::TableroBarcos(int dimension, int maxBarcos) : Tablero(dimension) {;
     this->maxBarcos = maxBarcos;
     this->randomRange = new RandomRange();
 }
 
 bool TableroBarcos::sePuedeAgregar(Barco barco) {
-    if ((barco.getX() < 0 || barco.getY() < 0) ||
-            (barco.getX() > dimension || barco.getY() > dimension))
+    if ((barco.getX() < 0 || barco.getY() < 0) || (barco.getX() > dimension || barco.getY() > dimension))
         return false;
 
-    if ((barco.getOrientacion() == 'H' &&
-         barco.getX() + barco.getTamanio() > dimension) ||
-            (barco.getOrientacion() == 'V' &&
-             barco.getY() + barco.getTamanio() > dimension))
+    if ((barco.getOrientacion() == 'H' && barco.getX() + barco.getTamanio() > dimension) || (barco.getOrientacion() == 'V' && barco.getY() + barco.getTamanio() > dimension))
         return false;
 
     int inicioI, finalI;
@@ -34,6 +29,7 @@ bool TableroBarcos::sePuedeAgregar(Barco barco) {
             }
         }
     }
+
     if (barco.getOrientacion() == 'V') {
         inicioI = (barco.getX() - 1) < 0 ? 0 : -1;
         finalI = (barco.getX() + barco.getTamanio()) > dimension - 1 ? 0 : 1;
@@ -73,24 +69,23 @@ bool TableroBarcos::agregarBarco(Barco barco) {
 }
 
 bool TableroBarcos::recibirAtaque(int x, int y) {
-    if (!this->verificarCoordenadas(x, y)) return false;
+    int posEnCuerpo = 0;
 
     if (this->matriz[x][y] == Codigo::Dañado) return false;
 
-    int posEnCuerpo = 0;
     this->matriz[x][y] = Codigo::Ataque;
 
     for (int i = 0; i < cantBarcos; i++) {
         if (barcos[i]->getOrientacion() == 'H' && (y == barcos[i]->getY()) && (x >= barcos[i]->getX() && x <= barcos[i]->getX() + barcos[i]->getTamanio())) {
             posEnCuerpo = (x - barcos[i]->getX());
-            barcos[i]->golpe(posEnCuerpo);
+            if (barcos[i]->golpe(posEnCuerpo)) this->cantMuertos++;
             this->matriz[x][y] = Codigo::Dañado;
             return true;
         }
 
         if (barcos[i]->getOrientacion() == 'V' && (x == barcos[i]->getX()) && (y >= barcos[i]->getY() && y <= barcos[i]->getY() + barcos[i]->getTamanio())) {
             posEnCuerpo = (y - barcos[i]->getY());
-            barcos[i]->golpe(posEnCuerpo);
+            if (barcos[i]->golpe(posEnCuerpo)) this->cantMuertos++;
             this->matriz[x][y] = Codigo::Dañado;
             return true;
         }
@@ -99,12 +94,7 @@ bool TableroBarcos::recibirAtaque(int x, int y) {
 }
 
 bool TableroBarcos::gameOver() {
-    int barcosMuertos = 0;
-    for (int i = 0; i < cantBarcos; i++) {
-        if (this->barcos[i]->isMuerto())
-            barcosMuertos++;
-    }
-    return (barcosMuertos == maxBarcos);
+    return this->cantMuertos == maxBarcos;
 }
 
 std::vector<Barco*> TableroBarcos::getBarcos() const{
@@ -116,26 +106,33 @@ int TableroBarcos::getCantBarcos() const{
 }
 
 void TableroBarcos::moverLanchas() {
-    for (int i = 0; i < maxBarcos; ++i) {
-        Barco* barcoAVerificar = this->barcos[i];
-        if (barcoAVerificar->getCodigo() == Codigo::Lancha && !barcoAVerificar->isMuerto()) {
-            int anteriorX = barcoAVerificar->getX();
-            int anteriorY = barcoAVerificar->getY();
-            int newX = randomRange->get(0, this->dimension - 1);
-            int newY = randomRange->get(0, this->dimension - 1);
+    if (this->tieneLancha){
+        for (int i = 0; i < maxBarcos; i++) {
+            Barco* barcoAVerificar = this->barcos[i];
+            if (barcoAVerificar->getCodigo() == Codigo::Lancha && !barcoAVerificar->isMuerto()) {
+                int anteriorX = barcoAVerificar->getX();
+                int anteriorY = barcoAVerificar->getY();
+                int newX = randomRange->get(0   , this->dimension - 1);
+                int newY = randomRange->get(0, this->dimension - 1);
 
-            barcoAVerificar->setX(newX);
-            barcoAVerificar->setY(newY);
-
-            while (!this->verificarCoordenadas(newX, newY) || !this->sePuedeAgregar(*barcoAVerificar)) {
-                newX = randomRange->get(0, this->dimension - 1);
-                newY = randomRange->get(0, this->dimension - 1);
                 barcoAVerificar->setX(newX);
                 barcoAVerificar->setY(newY);
-            }
 
-            this->cambiarCasilla(anteriorX, anteriorY, Codigo::Agua);
-            this->cambiarCasilla(newX, newY, Codigo::Lancha);
+                while (!this->sePuedeAgregar(*barcoAVerificar)) {
+                    newX = randomRange->get(0, this->dimension - 1);
+                    newY = randomRange->get(0, this->dimension - 1);
+                    barcoAVerificar->setX(newX);
+                    barcoAVerificar->setY(newY);
+                }
+
+                this->cambiarCasilla(anteriorX, anteriorY, Codigo::Agua);
+                this->cambiarCasilla(newX, newY, Codigo::Lancha);
+            }
         }
     }
 }
+
+void TableroBarcos::setTieneLancha(bool tieneLancha){
+    this->tieneLancha = tieneLancha;
+}
+

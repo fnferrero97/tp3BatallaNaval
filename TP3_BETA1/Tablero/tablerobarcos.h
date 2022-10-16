@@ -9,8 +9,10 @@
 
 class TableroBarcos : public Tablero {
 private:
-    int cantBarcos;
+    int cantBarcos = 0;
     int maxBarcos;
+    int cantMuertos = 0;
+    bool tieneLancha = false;
     std::vector<Barco*> barcos;
     RandomRange* randomRange;
 
@@ -21,12 +23,13 @@ public:
 
     bool sePuedeAgregar(Barco);
     bool agregarBarco(Barco);
-    virtual bool recibirAtaque(int, int);
+    bool recibirAtaque(int, int);
     bool gameOver();
     void info(bool = false);
     void moverLanchas();
     std::vector<Barco*> getBarcos() const;
     int getCantBarcos() const;
+    void setTieneLancha(bool);
 };
 
 #endif // TABLEROBARCOS_H

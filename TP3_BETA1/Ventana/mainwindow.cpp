@@ -80,17 +80,16 @@ void MainWindow::crearMapas(){
         this->labels[i] = new QLabel*[this->tamanioMapa];
 
         for (int j = 0; j < this->tamanioMapa; ++j) {
-            QPushButton* button = new QPushButton();
-
-            connect(button, &QPushButton::released, this,
+            this->buttons[i][j] = new QPushButton();
+            ui->attackGLayout->addWidget(buttons[i][j], i, j);
+            connect(buttons[i][j], &QPushButton::released, this,
                     [=]() { handleButton(i, j); });
 
-            this->buttons[i][j] = button;
-            ui->attackGLayout->addWidget(button, i, j);
-            QLabel* label = new QLabel("--");
 
-            this->labels[i][j] = label;
-            ui->mapGLayout->addWidget(label, i, j);
+            this->labels[i][j] = new QLabel("--");
+            this->labels[i][j]->setStyleSheet("outline: #87CEEB solid 5px; background-color: #87CEEB;");
+            this->labels[i][j]->setAlignment(Qt::AlignCenter);
+            ui->mapGLayout->addWidget(labels[i][j], i, j);
         }
     }
 }
@@ -114,15 +113,11 @@ void MainWindow::listarInfo(){
 
     ui->infoBarcos->append(QString::fromStdString("\nBARCOS ENEMIGOS"));
     for (auto barco : this->juego->getIA()->getTableroBarcos()->getBarcos()){
-        std::string x = std::to_string(barco->getX());
-        std::string y = std::to_string(barco->getY());
-        std::string tamanio = std::to_string(barco->getTamanio());
         std::string nombre(barco->getNombre());
-        std::string vida = std::to_string(barco->getTamanio() - barco->getGolpes());
         if (!barco->isMuerto()){
-            ui->infoBarcos->append(QString::fromStdString(nombre + " (X: " + x + ", Y: " + y + ") - Vida: " + vida + "/" + tamanio));
+            ui->infoBarcos->append(QString::fromStdString(nombre + " - A FLOTE!"));
         } else {
-            ui->infoBarcos->append(QString::fromStdString(nombre + " (X: " + x + ", Y: " + y + ") - HUNDIDO!"));
+            ui->infoBarcos->append(QString::fromStdString(nombre + " - HUNDIDO!"));
         }
     }
 }
@@ -174,10 +169,10 @@ void MainWindow::on_aniadirBarco_clicked(){
 }
 
 void MainWindow::setValidators() {
-    ui->cantBarcos->setValidator(new QIntValidator(0,10,this));
-    ui->tamanioMapa->setValidator(new QIntValidator(0,100,this));
-    ui->posX->setValidator(new QIntValidator(0,100,this));
-    ui->posY->setValidator(new QIntValidator(0,100,this));
+    ui->cantBarcos->setValidator(new QIntValidator(1, 10, this));
+    ui->tamanioMapa->setValidator(new QIntValidator(1, 20, this));
+    ui->posX->setValidator(new QIntValidator(0, 20, this));
+    ui->posY->setValidator(new QIntValidator(0, 20, this));
 }
 
 void MainWindow::setContadorBarcos(int valor, int total){

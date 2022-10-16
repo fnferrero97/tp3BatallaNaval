@@ -8,11 +8,11 @@ protected:
     int x;
     int y;
     int tamanio;
-    int golpes;
+    int golpes = 0;
     int codigo;
     char orientacion;
     char* nombre;
-    bool muerto;
+    bool muerto = false;
     std::vector<Codigo> cuerpo;
 
 public:

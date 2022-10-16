@@ -340,6 +340,62 @@
       </rect>
      </property>
     </widget>
+    <widget class="QPushButton" name="guardarPartida">
+     <property name="geometry">
+      <rect>
+       <x>670</x>
+       <y>450</y>
+       <width>471</width>
+       <height>90</height>
+      </rect>
+     </property>
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>0</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>480</width>
+       <height>110</height>
+      </size>
+     </property>
+     <property name="font">
+      <font>
+       <family>Source Code Pro</family>
+       <pointsize>25</pointsize>
+       <italic>true</italic>
+       <bold>true</bold>
+       <underline>false</underline>
+       <strikeout>false</strikeout>
+       <kerning>true</kerning>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">#guardarPartida {
+  background-color: #ddd;
+  border: 10px inset #5fcfbf;
+  color: black;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 40px;
+}
+
+#nuevoJuego:hover {
+  background-color: #188c8c;
+}
+
+</string>
+     </property>
+     <property name="text">
+      <string>Guardar Partida</string>
+     </property>
+    </widget>
    </widget>
    <widget class="QWidget" name="ponerBarcos" native="true">
     <property name="geometry">

@@ -20,16 +20,10 @@ int** Tablero::inicializarMatriz(int codCasilla) {
     return aux;
 }
 
-bool Tablero::cambiarCasilla(int x, int y, int codCasilla) {
-    if ((x >= dimension || y >= dimension) || (x < 0 || y < 0)) return false;
+void Tablero::cambiarCasilla(int x, int y, int codCasilla) {
     this->matriz[x][y] = codCasilla;
-    return true;
 }
 
 int** Tablero::getMatriz() const{
     return matriz;
-}
-
-bool Tablero::verificarCoordenadas(int x, int y) {
-    return ((x >= 0 && y >= 0) && (x < dimension && y < dimension));
 }

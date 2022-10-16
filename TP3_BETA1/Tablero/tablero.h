@@ -15,8 +15,7 @@ public:
     ~Tablero(){}
 
     int** inicializarMatriz(int);
-    bool cambiarCasilla(int, int, int);
-    bool verificarCoordenadas(int, int);
+    void cambiarCasilla(int, int, int);
     int** getMatriz() const;
 };
 

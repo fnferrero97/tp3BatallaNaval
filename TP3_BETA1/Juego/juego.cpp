@@ -28,7 +28,7 @@ bool Juego::colocarBarcosAleatorio(int turno) {
     while (i < maxBarcos) {
         int x = randomRange->get(0, this->dimensiones - 1);
         int y = randomRange->get(0, this->dimensiones - 1);
-        int opcionBarco = randomRange->get(0, 6);
+        int opcionBarco = randomRange->get(1, 5);
         char orientacion = randomRange->get(0, 2) == 1 ? 'H' : 'V';
         
         class Jugador* jugadorConTurno = (turno == 0) ? this->jugador : this->IA;
@@ -68,6 +68,8 @@ bool Juego::colocarBarcos(class Jugador* jugadorConTurno, int opcion, int x, int
     } break;
     case 4: {
         Navio::Lancha lancha(x, y, orientacion);
+        this->jugador->getTableroBarcos()->setTieneLancha(true);
+        this->IA->getTableroBarcos()->setTieneLancha(true);
         return jugadorConTurno->agregarBarco(lancha);
     } break;
     case 5: {

@@ -23,29 +23,27 @@ public:
     ~MainWindow();
 
     void handleButton(int x, int y) {
-        if (!this->juego->getJugador()->isGameOver() && !this->juego->getIA()->isGameOver()){
-            auto button = qobject_cast<QPushButton*>(sender());
-            if (button->isEnabled()) {
-                button->setDisabled(true);
-                button->setStyleSheet(QString("color: #ff0000"));
+        auto button = qobject_cast<QPushButton*>(sender());
+        if (button->isEnabled()) {
+            button->setDisabled(true);
+            button->setStyleSheet(QString("color: #ff0000"));
 
-                bool resultadoAtaqueJugador = this->juego->atacarIA(x, y);
-                int xIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
-                int yIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
-                bool resultadoAtaqueIA = this->juego->atacarJugador(xIA, yIA);
-                pintarMapa(resultadoAtaqueJugador, button);
-                describirAtaque(resultadoAtaqueJugador, x, y, resultadoAtaqueIA, xIA, yIA);
+            bool resultadoAtaqueJugador = this->juego->atacarIA(x, y);
+            int xIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
+            int yIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
+            bool resultadoAtaqueIA = this->juego->atacarJugador(xIA, yIA);
+            pintarMapa(resultadoAtaqueJugador, button);
+            describirAtaque(resultadoAtaqueJugador, x, y, resultadoAtaqueIA, xIA, yIA);
 
-                this->juego->moverLanchas();
-                dibujarPremapa();
-                listarInfo();
-            }
-        } else {
-            if (this->juego->getIA()->isGameOver()){
-                QMessageBox::information(this, "JUEGO TERMINADO", "GANASTE!.");
-            } else if(this->juego->getJugador()->isGameOver()) {
-                QMessageBox::information(this, "JUEGO TERMINADO", "PERDISTE!.");
-            }
+            this->juego->moverLanchas();
+            dibujarPremapa();
+            listarInfo();
+        }
+
+        if (this->juego->getJugador()->isGameOver() || this->juego->getIA()->isGameOver()){
+
+            this->juego->getIA()->isGameOver() ? QMessageBox::information(this, "JUEGO TERMINADO", "GANASTE!") : QMessageBox::information(this, "JUEGO TERMINADO", "PERDISTE!");
+
             for (int i = 0; i < this->tamanioMapa; i++) {
                 for (int j = 0; j < this->tamanioMapa; j++) {
                     this->buttons[i][j]->setDisabled(true);

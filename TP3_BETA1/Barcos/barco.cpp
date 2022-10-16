@@ -6,8 +6,7 @@ Barco::Barco(int x, int y, int tamanio, char orientacion, char* nombre) {
     this->tamanio = tamanio;
     this->orientacion = orientacion;
     this->nombre = nombre;
-    this->muerto = false;
-    this->golpes = 0;
+    this->muerto;
     this->cuerpo = inicializaCuerpo();
 }
 
@@ -22,11 +21,13 @@ bool Barco::golpe(int x) {
 
     if (this->codigo == Codigo::Submarino){
         if (x == 1) {
-            for (int i = 0; i < this->tamanio; ++i) {
+            for (int i = 0; i < this->tamanio; i++) {
                 this->cuerpo[i] = Codigo::Dañado;
                 this->golpes = 3;
-                return true;
             }
+        } else {
+            this->cuerpo[x] = Codigo::Dañado;
+            this->golpes++;
         }
     } else {
         this->cuerpo[x] = Codigo::Dañado;
