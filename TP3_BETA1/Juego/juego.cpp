@@ -1,5 +1,6 @@
 ﻿#include "juego.h"
 
+
 Juego::Juego(int dimensiones, int maxBarcos) {
     this->dimensiones = dimensiones;
     this->maxBarcos = maxBarcos;
@@ -14,8 +15,8 @@ void Juego::inicializarConfiguracion() {
 
 
 bool Juego::colocarBarcosManual(int opcionBarco, int x, int y, char orientacion) {
-        bool colocacionExitosa = this->colocarBarcos(this->jugador, opcionBarco, x, y, orientacion);
-        if (colocacionExitosa) this->barcosElegidosJugador.push_back(opcionBarco);
+    bool colocacionExitosa = this->colocarBarcos(this->jugador, opcionBarco, x, y, orientacion);
+    if (colocacionExitosa) this->barcosElegidosJugador.push_back(opcionBarco);
 
     return colocacionExitosa;
 }
@@ -25,9 +26,9 @@ bool Juego::colocarBarcosAleatorio(int turno) {
     bool colocacionExitosa;
     
     while (i < maxBarcos) {
-        int opcionBarco = randomRange->get(0, 6);
         int x = randomRange->get(0, this->dimensiones - 1);
         int y = randomRange->get(0, this->dimensiones - 1);
+        int opcionBarco = randomRange->get(1, 5);
         char orientacion = randomRange->get(0, 2) == 1 ? 'H' : 'V';
         
         class Jugador* jugadorConTurno = (turno == 0) ? this->jugador : this->IA;
@@ -51,14 +52,13 @@ bool Juego::colocarBarcosAleatorio(int turno) {
 }
 
 bool Juego::colocarBarcos(class Jugador* jugadorConTurno, int opcion, int x, int y, char orientacion) {
-      
+
     switch (opcion) {
     case 1: {
         Navio::Crucero cru(x, y, orientacion);
         return jugadorConTurno->agregarBarco(cru);
     } break;
     case 2: {
-
         Navio::Destructor des(x, y, orientacion);
         return jugadorConTurno->agregarBarco(des);
     } break;
@@ -68,17 +68,17 @@ bool Juego::colocarBarcos(class Jugador* jugadorConTurno, int opcion, int x, int
     } break;
     case 4: {
         Navio::Lancha lancha(x, y, orientacion);
+        this->jugador->getTableroBarcos()->setTieneLancha(true);
+        this->IA->getTableroBarcos()->setTieneLancha(true);
         return jugadorConTurno->agregarBarco(lancha);
     } break;
     case 5: {
-
-        Navio::Submarino sub(x, y, orientacion);
-        return jugadorConTurno->agregarBarco(sub);
-
-    } break;
-    case 6: {
         Navio::Portaaviones porta(x, y, orientacion);
         return jugadorConTurno->agregarBarco(porta);
+    } break;
+    case 6: {
+        Navio::Submarino sub(x, y, orientacion);
+        return jugadorConTurno->agregarBarco(sub);
     } break;
     default:
         return false;
@@ -90,9 +90,7 @@ bool Juego::atacarIA(int x, int y) {
     return IA->recibirAtaque(x, y);
 }
 
-bool Juego::atacarJugador() {
-    int x = randomRange->get(0, this->dimensiones - 1);
-    int y = randomRange->get(0, this->dimensiones - 1);
+bool Juego::atacarJugador(int x, int y) {
     IA->marcarAtaque(x, y);
     return jugador->recibirAtaque(x, y);
 }
@@ -105,3 +103,12 @@ void Juego::moverLanchas() {
 class Jugador* Juego::getJugador() const{
     return jugador;
 }
+
+class Jugador* Juego::getIA() const{
+    return IA;
+}
+
+RandomRange* Juego::getRandomRange() const{
+    return randomRange;
+}
+

@@ -24,12 +24,31 @@ public:
 
     void handleButton(int x, int y) {
         auto button = qobject_cast<QPushButton*>(sender());
-        if (button->isEnabled()) {
+
             button->setDisabled(true);
             button->setStyleSheet(QString("color: #ff0000"));
-            bool resultadoAtaque = this->juego->atacarIA(x, y);
-            pintarMapa(resultadoAtaque, button);
-            describirAtaque(resultadoAtaque, x, y);
+
+            bool resultadoAtaqueJugador = this->juego->atacarIA(x, y);
+            int xIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
+            int yIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
+            bool resultadoAtaqueIA = this->juego->atacarJugador(xIA, yIA);
+            pintarMapa(resultadoAtaqueJugador, button);
+            describirAtaque(resultadoAtaqueJugador, x, y, resultadoAtaqueIA, xIA, yIA);
+
+            this->juego->moverLanchas();
+            dibujarPremapa();
+            listarInfo();
+
+
+        if (this->juego->getJugador()->isGameOver() || this->juego->getIA()->isGameOver()){
+
+            this->juego->getIA()->isGameOver() ? QMessageBox::information(this, "JUEGO TERMINADO", "GANASTE!") : QMessageBox::information(this, "JUEGO TERMINADO", "PERDISTE!");
+
+            for (int i = 0; i < this->tamanioMapa; i++) {
+                for (int j = 0; j < this->tamanioMapa; j++) {
+                    this->buttons[i][j]->setDisabled(true);
+                }
+            }
         }
     }
 
@@ -38,7 +57,7 @@ public:
     void esconderTodo();
     void crearMapas();
     void setDefaultTexts();
-    void describirAtaque(bool, int, int);
+    void describirAtaque(bool, int, int, bool, int, int);
     void setValidators();
     void setContadorBarcos(int, int);
     void listarInfo();
@@ -58,6 +77,6 @@ private:
     QLabel*** labels;
     Juego* juego = nullptr;
     int barcosAgregados = 0;
-    int** mapita;
+    int tamanioMapa;
 };
 #endif // MAINWINDOW_H
