@@ -36,8 +36,8 @@ public:
     int xIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
     int yIA = this->juego->getRandomRange()->get(0, this->tamanioMapa - 1);
     bool resultadoAtaqueIA = this->juego->atacarJugador(xIA, yIA);
-    pintarMapa(resultadoAtaqueJugador, button, xIA, yIA);
-    describirAtaque(resultadoAtaqueJugador, x, y, resultadoAtaqueIA);
+    pintarMapa(resultadoAtaqueJugador, button);
+    describirAtaque(resultadoAtaqueJugador, x, y, resultadoAtaqueIA, xIA, yIA);
 
     this->juego->moverLanchas();
     dibujarPremapa();
