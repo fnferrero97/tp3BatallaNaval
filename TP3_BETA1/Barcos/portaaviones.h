@@ -6,13 +6,13 @@ namespace Navio {
 
 class Portaaviones : public Barco {
 public:
-    Portaaviones(){}
+  Portaaviones(){}
 
-    Portaaviones(int x, int y, char orientacion) : Barco(x, y, 5, orientacion, (char*)"Portaavion") {
-        this->codigo = Codigo::Portaaviones;
-    }
+  Portaaviones(int x, int y, char orientacion) : Barco(x, y, 5, orientacion, (char*)"Portaavion") {
+    this->codigo = Codigo::Portaaviones;
+  }
 
-    ~Portaaviones(){}
+  ~Portaaviones(){}
 };
 
 #endif // PORTAAVIONES_H

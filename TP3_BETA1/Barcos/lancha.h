@@ -6,18 +6,18 @@ namespace Navio {
 
 class Lancha : public Barco {
 public:
-    Lancha(){}
+  Lancha(){}
 
-    Lancha(int x, int y, char orientacion) : Barco(x, y, 1, orientacion, (char*)"Lancha") {
-        this->codigo = Codigo::Lancha;
-    }
+  Lancha(int x, int y, char orientacion) : Barco(x, y, 1, orientacion, (char*)"Lancha") {
+    this->codigo = Codigo::Lancha;
+  }
 
-    ~Lancha(){}
+  ~Lancha(){}
 
-    void actualizar(int x, int y) {
-        this->x = x;
-        this->y = y;
-    }
+  void actualizar(int x, int y) {
+    this->x = x;
+    this->y = y;
+  }
 };
 
 #endif // LANCHA_H

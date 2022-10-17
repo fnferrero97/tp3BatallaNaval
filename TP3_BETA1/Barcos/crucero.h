@@ -6,13 +6,13 @@ namespace Navio {
 
 class Crucero : public Barco {
 public:
-    Crucero(){}
+  Crucero(){}
 
-    Crucero(int x, int y, char orientacion) : Barco(x, y, 3, orientacion, (char*)"Crucero") {
-        this->codigo = Codigo::Crucero;
-    }
+  Crucero(int x, int y, char orientacion) : Barco(x, y, 3, orientacion, (char*)"Crucero") {
+    this->codigo = Codigo::Crucero;
+  }
 
-    ~Crucero(){}
+  ~Crucero(){}
 };
 
 #endif // CRUCERO_H

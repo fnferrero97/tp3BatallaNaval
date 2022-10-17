@@ -6,13 +6,13 @@ namespace Navio {
 
 class Destructor : public Barco {
 public:
-    Destructor(){}
+  Destructor(){}
 
-    Destructor(int x, int y, char orientacion) : Barco(x, y, 4, orientacion, (char*)"Destructor") {
-        this->codigo = Codigo::Destructor;
-    }
+  Destructor(int x, int y, char orientacion) : Barco(x, y, 4, orientacion, (char*)"Destructor") {
+    this->codigo = Codigo::Destructor;
+  }
 
-    ~Destructor(){}
+  ~Destructor(){}
 };
 
 #endif // DESTRUCTOR_H

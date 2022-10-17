@@ -4,9 +4,9 @@
 
 class TableroAtaques : public Tablero {
 public:
-    TableroAtaques();
-    TableroAtaques(int);
-    bool recibirAtaque(int, int);
+  TableroAtaques();
+  TableroAtaques(int);
+  bool recibirAtaque(int, int);
 };
 
 #endif // TABLEROATAQUES_H

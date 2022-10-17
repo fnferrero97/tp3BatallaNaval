@@ -6,13 +6,13 @@ namespace Navio {
 
 class Fragata : public Barco {
 public:
-    Fragata(){}
+  Fragata(){}
 
-    Fragata(int x, int y, char orientacion) : Barco(x, y, 2, orientacion, (char*)"Fragata") {
-        this->codigo = Codigo::Fragata;
-    }
+  Fragata(int x, int y, char orientacion) : Barco(x, y, 2, orientacion, (char*)"Fragata") {
+    this->codigo = Codigo::Fragata;
+  }
 
-    ~Fragata(){}
+  ~Fragata(){}
 };
 
 #endif // FRAGATA_H
