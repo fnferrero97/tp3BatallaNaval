@@ -13,6 +13,7 @@ protected:
     char orientacion;
     char* nombre;
     bool muerto = false;
+    bool hundido = false;
     std::vector<Codigo> cuerpo;
 
 public:
@@ -20,7 +21,7 @@ public:
     Barco(int, int, int, char, char*);
     ~Barco();
 
-    bool golpe(int);
+    virtual bool golpe(int);
     int getX() const;
     int getY() const;
     int getTamanio() const;
@@ -32,6 +33,8 @@ public:
     void setX(int newX);
     void setY(int newY);
     std::vector<Codigo> inicializaCuerpo();
+    void setHundido(bool);
+    bool isHundido();
 };
 
 

@@ -1,4 +1,4 @@
-﻿#include "barco.h"
+﻿#include "Barcos/barco.h"
 
 Barco::Barco(int x, int y, int tamanio, char orientacion, char* nombre) {
     this->x = x;
@@ -6,7 +6,6 @@ Barco::Barco(int x, int y, int tamanio, char orientacion, char* nombre) {
     this->tamanio = tamanio;
     this->orientacion = orientacion;
     this->nombre = nombre;
-    this->muerto;
     this->cuerpo = inicializaCuerpo();
 }
 
@@ -18,27 +17,14 @@ std::vector<Codigo> Barco::inicializaCuerpo() {
 }
 
 bool Barco::golpe(int x) {
-
-    if (this->codigo == Codigo::Submarino){
-        if (x == 1) {
-            for (int i = 0; i < this->tamanio; i++) {
-                this->cuerpo[i] = Codigo::Dañado;
-                this->golpes = 3;
-            }
-        } else {
-            this->cuerpo[x] = Codigo::Dañado;
-            this->golpes++;
-        }
-    } else {
-        this->cuerpo[x] = Codigo::Dañado;
-        this->golpes++;
-    }
+    //FIJARSE PORQUE ESTO NO ANDA CON POLIMORFISMO
+    this->cuerpo[x] = Codigo::Dañado;
+    this->golpes++;
 
     if (this->golpes == this->tamanio) {
         this->muerto = true;
         return true;
     }
-
     return false;
 }
 
@@ -80,5 +66,13 @@ void Barco::setX(int x) {
 
 void Barco::setY(int y) {
     this->y = y;
+}
+
+void Barco::setHundido(bool hundido){
+    this->hundido = hundido;
+}
+
+bool Barco::isHundido(){
+    return this->hundido;
 }
 

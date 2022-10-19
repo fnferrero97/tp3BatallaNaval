@@ -8,6 +8,9 @@
         <file>lancha.png</file>
         <file>portaavion.png</file>
         <file>submarino.png</file>
+        <file>agua.png</file>
+        <file>errado.png</file>
+        <file>impacto.png</file>
     </qresource>
     <qresource prefix="/sounds">
         <file>music01.mp3</file>

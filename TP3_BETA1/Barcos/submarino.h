@@ -1,6 +1,6 @@
 ﻿#ifndef SUBMARINO_H
 #define SUBMARINO_H
-#include "barco.h"
+#include "Barcos/barco.h"
 
 namespace Navio {
 
@@ -13,6 +13,9 @@ public:
     }
 
     ~Submarino(){}
+
+    bool golpe(int);
+
 };
 
 #endif // SUBMARINO_H

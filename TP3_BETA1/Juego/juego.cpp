@@ -55,29 +55,29 @@ bool Juego::colocarBarcos(class Jugador* jugadorConTurno, int opcion, int x, int
 
     switch (opcion) {
     case 1: {
-        Navio::Crucero cru(x, y, orientacion);
+        Barco* cru = new Navio::Crucero(x, y, orientacion);
         return jugadorConTurno->agregarBarco(cru);
     } break;
     case 2: {
-        Navio::Destructor des(x, y, orientacion);
+        Barco* des = new Navio::Destructor(x, y, orientacion);
         return jugadorConTurno->agregarBarco(des);
     } break;
     case 3: {
-        Navio::Fragata fra(x, y, orientacion);
+        Barco* fra = new Navio::Fragata(x, y, orientacion);
         return jugadorConTurno->agregarBarco(fra);
     } break;
     case 4: {
-        Navio::Lancha lancha(x, y, orientacion);
+        Barco* lancha = new Navio::Lancha(x, y, orientacion);
         this->jugador->getTableroBarcos()->setTieneLancha(true);
         this->IA->getTableroBarcos()->setTieneLancha(true);
         return jugadorConTurno->agregarBarco(lancha);
     } break;
     case 5: {
-        Navio::Portaaviones porta(x, y, orientacion);
+        Barco* porta = new Navio::Portaaviones(x, y, orientacion);
         return jugadorConTurno->agregarBarco(porta);
     } break;
     case 6: {
-        Navio::Submarino sub(x, y, orientacion);
+        Barco* sub = new Navio::Submarino(x, y, orientacion);
         return jugadorConTurno->agregarBarco(sub);
     } break;
     default:

@@ -21,8 +21,8 @@ public:
     TableroBarcos(int, int);
     ~TableroBarcos(){}
 
-    bool sePuedeAgregar(Barco);
-    bool agregarBarco(Barco);
+    bool sePuedeAgregar(Barco*);
+    bool agregarBarco(Barco*);
     bool recibirAtaque(int, int);
     bool gameOver();
     void info(bool = false);
