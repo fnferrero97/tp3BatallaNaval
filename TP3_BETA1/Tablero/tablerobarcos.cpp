@@ -17,6 +17,8 @@ bool TableroBarcos::sePuedeAgregar(Barco* barco) {
     if (barco->getX() == Codigo::Ataque || barco->getY() == Codigo::Ataque || barco->getX() == Codigo::Dañado || barco->getY() == Codigo::Dañado)
         return false;
 
+    if (barco->getCodigo() == Codigo::Lancha && this->cantLanchas>=2 ) return false;    //a ver ahi limitar cant de lanchas
+
     int inicioI, finalI;
     int inicioJ, finalJ;
 
@@ -50,7 +52,7 @@ bool TableroBarcos::sePuedeAgregar(Barco* barco) {
     return true;
 }
 
-bool TableroBarcos::agregarBarco(Barco* barco) {
+bool TableroBarcos::agregarBarco(Barco* barco) {        //ultimo agregado, tope para lanchas
     if (!this->sePuedeAgregar(barco) || (this->cantBarcos > this->maxBarcos))
         return false;
 
@@ -58,11 +60,14 @@ bool TableroBarcos::agregarBarco(Barco* barco) {
 
     if (barco->getOrientacion() == 'H') {
         for (int i = barco->getX(); i < barco->getX() + barco->getTamanio(); i++) {
+           if (barco->getCodigo() == Codigo::Lancha)    this->cantLanchas++;
             this->matriz[i][barco->getY()] = barco->getCodigo();
+
         }
     }
     if (barco->getOrientacion() == 'V') {
         for (int i = barco->getY(); i < barco->getY() + barco->getTamanio(); i++) {
+           if (barco->getCodigo() == Codigo::Lancha)    this->cantLanchas++;
             this->matriz[barco->getX()][i] = barco->getCodigo();
         }
     }

@@ -10,6 +10,7 @@
 class TableroBarcos : public Tablero {
 private:
     int cantBarcos = 0;
+    int cantLanchas = 0;
     int maxBarcos;
     int cantMuertos = 0;
     bool tieneLancha = false;
