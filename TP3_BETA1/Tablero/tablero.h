@@ -6,17 +6,17 @@
 
 class Tablero {
 protected:
-    int dimension;
-    int** matriz;
+  int dimension;
+  int **matriz;
 
 public:
-    Tablero(){}
-    Tablero(int);
-    ~Tablero(){}
+  Tablero() {}
+  Tablero(int);
+  virtual ~Tablero() { delete[] this->matriz; }
 
-    int** inicializarMatriz(int);
-    void cambiarCasilla(int, int, int);
-    int** getMatriz() const;
+  int **inicializarMatriz(int);
+  void cambiarCasilla(int, int, int);
+  int **getMatriz() const;
 };
 
 #endif // TABLERO_H

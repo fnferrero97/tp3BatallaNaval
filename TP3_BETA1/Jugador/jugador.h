@@ -5,26 +5,29 @@
 
 class Jugador {
 private:
-  TableroBarcos* tableroBarcos;
-  TableroAtaques* tableroAtaques;
-  Jugador* oponente;
-  char* nombre;
+  TableroBarcos *tableroBarcos;
+  TableroAtaques *tableroAtaques;
+  Jugador *oponente;
+  char *nombre;
   int dimensiones;
 
 public:
   Jugador() {}
   Jugador(int, int, char *);
-  ~Jugador() {}
+  ~Jugador() {
+    delete this->tableroBarcos;
+    delete this->tableroAtaques;
+  }
 
   void dibujar(bool = true);
-  bool agregarBarco(Barco*);
-  char* getNombre() const;
+  bool agregarBarco(Barco *);
+  char *getNombre() const;
   bool isGameOver();
   bool recibirAtaque(int, int);
   bool marcarAtaque(int, int);
   void moverLanchas();
-  TableroBarcos* getTableroBarcos() const;
-  TableroAtaques* getTableroAtaques() const;
+  TableroBarcos *getTableroBarcos() const;
+  TableroAtaques *getTableroAtaques() const;
 };
 
 #endif // JUGADOR_H

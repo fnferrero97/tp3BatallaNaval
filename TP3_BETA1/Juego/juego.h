@@ -8,34 +8,40 @@
 
 class Juego {
 private:
-    class Jugador* jugador;
-    class Jugador* IA;
-    RandomRange* randomRange;
-    int dimensiones;
-    int maxBarcos;
-    std::vector<int> barcosElegidosJugador;
+  class Jugador *jugador;
+  class Jugador *IA;
+  RandomRange *randomRange;
+  int dimensiones;
+  int maxBarcos;
+  std::vector<int> barcosElegidosJugador;
+  std::vector<std::pair<int, int>> ataques;
 
 public:
-    Juego(int, int);
-    ~Juego(){}
+  Juego(int, int);
+  ~Juego() {
+    delete this->jugador;
+    delete this->IA;
+    delete this->randomRange;
+  }
 
-    void inicializarConfiguracion();
+  void inicializarConfiguracion();
 
-    // Colocacion de barcos
-    bool colocarBarcosManual(int, int, int, char);
-    bool colocarBarcosAleatorio(int);
-    bool colocarBarcos(class Jugador*, int, int, int, char);
+  // Colocacion de barcos
+  bool colocarBarcosManual(int, int, int, char);
+  bool colocarBarcosAleatorio(int);
+  bool colocarBarcos(class Jugador *, int, int, int, char);
 
-    // Ataques
-    bool atacarIA(int, int);
-    bool atacarJugador(int, int);
+  // Ataques
+  bool atacarIA(int, int);
+  bool atacarJugador(int, int);
 
-    // mover la lancha en cada turno
-    void moverLanchas();
+  // mover la lancha en cada turno
+  void moverLanchas();
 
-    class Jugador* getJugador() const;
-    class Jugador* getIA() const;
-    RandomRange* getRandomRange() const;
+  class Jugador *getJugador() const;
+  class Jugador *getIA() const;
+  RandomRange *getRandomRange() const;
+  const std::vector<std::pair<int, int>> &getAtaques() const;
 };
 
 #endif // JUEGO_H
