@@ -121,7 +121,7 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string notr="true">Batalla Naval v0.17.01</string>
+   <string notr="true">Batalla Naval v1.01</string>
   </property>
   <property name="windowIcon">
    <iconset theme="applications-games" resource="src.qrc">

@@ -49,7 +49,6 @@ public:
 
       this->esconderTodo();
       this->resetearParametros();
-
       this->goMenuPrincipal();
     }
   }

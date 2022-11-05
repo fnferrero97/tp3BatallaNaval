@@ -15,8 +15,12 @@ MainWindow::~MainWindow() { delete ui; }
 void MainWindow::setDefaultTexts() {
   ui->listaBarcos->setPlaceholderText(QStringLiteral("ELIJA BARCO"));
   ui->listaBarcos->setCurrentIndex(-1);
+  ui->tamanioMapa->clear();
+  ui->cantBarcos->clear();
   ui->tamanioMapa->setPlaceholderText(QStringLiteral("TAMAÑO MAPA"));
   ui->cantBarcos->setPlaceholderText(QStringLiteral("CANT. BARCOS"));
+  ui->posX->clear();
+  ui->posY->clear();
   ui->posX->setPlaceholderText(QStringLiteral("Y"));
   ui->posY->setPlaceholderText(QStringLiteral("X"));
 }
@@ -49,7 +53,7 @@ void MainWindow::esconderTodo() {
 }
 
 void MainWindow::on_nuevoJuego_clicked() {
-  this->resetearParametros();
+  //this->resetearParametros();
   ui->nuevoJuego->hide();
   ui->cargarPartida->hide();
   ui->configJuego->show();
@@ -208,13 +212,22 @@ void MainWindow::resetearParametros() {
     delete this->juego;
     this->juego = nullptr;
   };
-  this->tamanioMapa = 0;
-  ui->cantBarcos->setText("");
-  ui->tamanioMapa->setText("");
-  ui->checkAleatorio->setChecked(false);
 
-  ui->posX->setText("");
-  ui->posY->setText("");
+  for (int i = 0; i < this->tamanioMapa; i++){
+      for (int j = 0; j < this->tamanioMapa; j++){
+          delete this->buttons[i][j];
+          delete this->labels[i][j];
+      }
+      delete[] buttons[i];
+      delete[] labels[i];
+  }
+
+  delete this->buttons;
+  delete this->labels;
+
+
+  this->tamanioMapa = 0;
+  setDefaultTexts();
 }
 
 void MainWindow::dibujarPremapa() {
@@ -305,12 +318,11 @@ void MainWindow::on_cargarPartida_clicked() {
   //  QString filepath = QFileDialog::getOpenFileName(
   //      this, "Elija el archivo a cargar", ":/saves/", filtro);
   //  QMessageBox::information(this, "ABRISTE", filepath);
-  std::fstream archi(this->rutaPartidaGuardada,
-                     std::ios::binary | std::ios::in);
+  std::fstream archi(this->rutaPartidaGuardada, std::ios::binary | std::ios::in);
 
-  archi.read((char *)&this->tamanioMapa, sizeof(int));
+  archi.read((char*)&this->tamanioMapa, sizeof(int));
   int cantBarcos = 0;
-  archi.read((char *)&cantBarcos, sizeof(int));
+  archi.read((char*)&cantBarcos, sizeof(int));
 
   this->juego = new Juego(this->tamanioMapa, cantBarcos);
   ui->configJuego->hide();
@@ -318,7 +330,7 @@ void MainWindow::on_cargarPartida_clicked() {
   BarcoStr barcoStr;
 
   for (int i = 0; i < cantBarcos; ++i) {
-    archi.read((char *)&barcoStr, sizeof(BarcoStr));
+    archi.read((char*)&barcoStr, sizeof(BarcoStr));
     // auto [codigo, x, y, orientacion] = barcoStr;
     juego->colocarBarcos(this->juego->getJugador(), barcoStr.codigo, barcoStr.x,
                          barcoStr.y, barcoStr.orientacion);
@@ -330,15 +342,10 @@ void MainWindow::on_cargarPartida_clicked() {
                          barcoStr.y, barcoStr.orientacion);
   }
 
-  int ataqueX, ataqueY;
   bool atacarIA = true;
   AtaqueStr ataqueStr;
-  while (archi.read((char *)&ataqueStr, sizeof(AtaqueStr))) {
-    if (atacarIA) {
-      juego->atacarIA(ataqueStr.x, ataqueStr.y);
-    } else {
-      juego->atacarJugador(ataqueStr.x, ataqueStr.y);
-    }
+  while (archi.read((char*)&ataqueStr, sizeof(AtaqueStr))) {
+    atacarIA ? juego->atacarIA(ataqueStr.x, ataqueStr.y) : juego->atacarJugador(ataqueStr.x, ataqueStr.y);
     atacarIA = !atacarIA;
   }
 
