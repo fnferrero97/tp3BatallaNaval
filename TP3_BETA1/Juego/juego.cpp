@@ -120,3 +120,7 @@ RandomRange *Juego::getRandomRange() const { return randomRange; }
 const std::vector<std::pair<int, int>> &Juego::getAtaques() const {
   return ataques;
 }
+
+int Juego::getMaxBarcos() const { return maxBarcos; }
+
+void Juego::setMaxBarcos(int newMaxBarcos) { maxBarcos = newMaxBarcos; }

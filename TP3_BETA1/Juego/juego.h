@@ -42,6 +42,8 @@ public:
   class Jugador *getIA() const;
   RandomRange *getRandomRange() const;
   const std::vector<std::pair<int, int>> &getAtaques() const;
+  int getMaxBarcos() const;
+  void setMaxBarcos(int newMaxBarcos);
 };
 
 #endif // JUEGO_H
